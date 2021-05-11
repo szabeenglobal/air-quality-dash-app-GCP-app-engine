@@ -4,7 +4,6 @@ import numpy as np
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc 
 import dash_html_components as html 
-from jupyter_dash import JupyterDash
 from dash.dependencies  import Input, Output, State
 import plotly.express as  px
 import os
@@ -24,7 +23,7 @@ dash_text = '''
 Air Quality Perdiction App.
 '''
 #------------------ DASH ------------------#
-external_stylesheets=[dbc.themes.CYBORG]
+external_stylesheets=[dbc.themes.LUX]
 
 app = dash.Dash(__name__,external_stylesheets=external_stylesheets, assets_folder='assets' )
 server = app.server
@@ -35,8 +34,13 @@ app.layout = html.Div(children=[
     html.H1(
         "Air quality data visualization"),
 
-
-    dcc.Graph(id='graph'),
+    dbc.Container(
+        dbc.Row(
+            [dbc.Col(dcc.Graph(id='graph'), width=6),
+            dbc.Col(dcc.Graph(id='graph-1'), width=6)]
+        )
+    )
+    ,
     
     html.Label([
         "colorscale", 
@@ -54,10 +58,13 @@ app.layout = html.Div(children=[
 #Define callback to update graph
 @app.callback(
     Output(component_id='graph', component_property='figure'),
+    Output(component_id='graph-1', component_property='figure'),
     [Input("colorscale-dropdown", "value")]
 )
 def update_figure(colorscale):
-     return px.histogram(df, x='AirQuality-PM2.5')
+      figure1 = px.histogram(df, x='AirQuality-PM2.5')
+      figure2 = px.histogram(df, x='AirQuality-PM2.5')
+      return figure1, figure2
 # -------------------------- MAIN ---------------------------- #
 
 
