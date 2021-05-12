@@ -1,12 +1,51 @@
-This guide shows how to create and deploy a dash application using Google Cloud Platform (GCP) App Engine, using data file located in a github repository. The commits that you push to your Github repository automatically are automatically copied into a repository hosted in Cloud Source Repositories instead of your local computer. 
+
+This guide shows how to create and deploy a demo dash application using Google Cloud Platform (GCP) App Engine, using data file located in a github repository. The commits that you push to your Github repository automatically are automatically copied into a repository hosted in Cloud Source Repositories instead of your local computer. 
+Here is the [link](https://air-quality-dash-app.ew.r.appspot.com)  to the demo dash app that we built using this guide. 
+
+Please note that this guide is work in progress. 
 
 The steps involved are: 
 
 ## Step 1: Create a dash application
 
-you need four files, main.py, app.yaml, requirements.txt, .gcloudignore, and two folders data, and assets. 
+In order to creat a dash app you will need four files: main.py, app.yaml, requirements.txt, .gcloudignore, and two folders: data, and assets. 
 
-**main.py**
+**main.py** 
+The main.py file should at least contain the following section 
+
+**Import statements** 
+**Python functions** - if you are using any function for data analysis or visualization<br>
+**Load data**<br>
+**Text** <br>
+**Dash** - This is the core of a dash application. 
+```python
+app.layout = html.Div(children=[
+    html.H1(
+        "Air quality data visualization"),
+
+    dbc.Container(
+        dbc.Row(
+            [dbc.Col(dcc.Graph(id='graph'), width=6),
+            dbc.Col(dcc.Graph(id='graph-1'), width=6)]
+        )
+    )
+    ,
+    
+    html.Label([
+        "colorscale", 
+        dcc.Dropdown(
+            id='colorscale-dropdown',
+            clearable=False,
+            value='plasma',
+            options=[{'label':c, 'value':c}
+                    for c in px.colors.named_colorscales()
+                    ])
+    ])
+
+])
+```
+**Callbacks** - to add interactivity to your dash app. 
+
 
 **requirements.txt**
 ```python
@@ -60,12 +99,22 @@ entrypoint: gunicorn -b 0.0.0.0:8080 main:server
 
 ## Step 2: Create a new repo on github and push the app to GitHub
 
+ **2.1** Create a new repository on github. Copy the https link to your repo. The link to this demo app's repo is https://github.com/szabeenglobal/air-quality-dash-app-GCP-app-engine
+ **2.2** Go to Terminal and run the following commands. 
+```
+git init
+git add .
+git commit -m "initial commit"
+git remote add origin [github-repo-HTTPS-link]
+git push -u origin master
+```
+
 ## Step 3: Deploy your Application to Google Cloud Platform App engine 
-    - Mirror the app repository to Cloud Source Repositories
-    https://cloud.google.com/source-repositories/docs/mirroring-a-github-repository
-    - Enable Cloud Build API and App Engine Admin API
-    - Create an App Engine application
-    - Add trigger in Cloud Build
+ **3.1** Step Mirror the app repository to Cloud Source Repositories
+**3.2** https://cloud.google.com/source-repositories/docs/mirroring-a-github-repository
+ **3.3** Enable Cloud Build API and App  Engine Admin API
+**3.4** Create an App Engine application
+**3.4** Add trigger in Cloud Build
 
 
 
