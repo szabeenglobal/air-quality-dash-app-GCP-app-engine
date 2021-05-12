@@ -99,7 +99,7 @@ entrypoint: gunicorn -b 0.0.0.0:8080 main:server
 
 ## Step 2: Create a new repo on github and push the app to GitHub
 
- **2.1** Create a new repository on github. Copy the https link to your repo. The link to this demo app's repo is https://github.com/szabeenglobal/air-quality-dash-app-GCP-app-engine
+ **2.1** Create a new repository on github. Copy the https link to your repo. The link to this demo app's repo is https://github.com/szabeenglobal/air-quality-dash-app-GCP-app-engine <br>
  **2.2** Go to Terminal and run the following commands. 
 ```
 git init
@@ -110,10 +110,18 @@ git push -u origin master
 ```
 
 ## Step 3: Deploy your Application to Google Cloud Platform App engine 
- **3.1** Step Mirror the app repository to Cloud Source Repositories
-**3.2** https://cloud.google.com/source-repositories/docs/mirroring-a-github-repository
- **3.3** Enable Cloud Build API and App  Engine Admin API
-**3.4** Create an App Engine application
+ **3.1** Mirror the app repository to Cloud Source Repositories
+ Follow [this tutorial](https://cloud.google.com/source-repositories/docs/mirroring-a-github-repository) provided by google cloud on how to mirror repositories. Once you complete the mirroring steps your repo will show up under [All repositories](https://source.cloud.google.com/repos) tab. 
+
+**3.2** Enable Cloud Build API and App  Engine Admin API
+
+Cloud build helps us to  automatically deploy an app located in Cloud Source Repositories to Google App Engine after a new commit. [Here is a tutorial](https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories#grant-app-engine_access-to-cloud_build) provided by google. for convenience, The steps are as follows: 
+1. [Open the Cloud build Settings page](https://console.cloud.google.com/cloud-build/settings)<br>
+2. Set the status of the App Engine Admin role to Enable.<br>
+3. Open [App Engine Admin API](https://console.developers.google.com/apis/library/appengine.googleapis.com) page
+4. Click Enable in the App Engine API page
+
+**3.3** Create an App Engine application
 **3.4** Add trigger in Cloud Build
 
 
